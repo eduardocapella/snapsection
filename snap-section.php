@@ -22,7 +22,6 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 define ( '__CWSS_VERSION__', '1.0.0' );
 
 
-
 // Include Composer's Autoloader if file exist
 $autoload_file = dirname( __FILE__ ) . '/vendor/autoload.php';
 if( file_exists( $autoload_file ) ) {
@@ -35,8 +34,18 @@ function cwss_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'cwss_enqueue_scripts' );
 
+
 // enqueue SnapSection styles
 function cwss_enqueue_styles() {
+    if( is_admin() || is_archive() || is_search() ) {
+        return;
+    }
     wp_enqueue_style( 'cwss-css', plugin_dir_url( __FILE__ ) . 'src/css/style.css', array(), __CWSS_VERSION__ );
 }
+
 add_action( 'wp_enqueue_scripts', 'cwss_enqueue_styles' );
+
+// if( !is_admin() && !is_archive() && !is_search() ) {
+//     add_action( 'wp_enqueue_scripts', 'cwss_enqueue_styles' );
+// }
+
