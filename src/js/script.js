@@ -9,28 +9,26 @@ jQuery(document).ready(function($) {
     var homeurl = window.cwssData.homeUrl;
 
     var homeLocation = window.location.href;
-    console.log( 'AQUI! ' + homeLocation );
+    // console.log( 'AQUI! ' + homeLocation );
 
     // find every <h3> element within the page
-    $headings = $( 'body' ).find( 'h3' );
-
-
-
-    
+    $headings = $( 'body' ).find( 'h3' );  
+    // console.log('$headings', $headings);
 
     // remove any IDs in the URL
     $url = $(location).attr( 'href').split('#')[0];
 
     $headings.each(function(i) {
-
+        // console.log('i', i);
         // check if <h3> already has an ID.
         // if doesn't, create one from its content
-        if ( ! $(this).is('[id]') ) {
+        // remember that var or let declares a variable
+        let $slug = $(this).attr( 'id' );
+
+        if ( ! $slug ) {
             let $title = $(this).text();
-            var $slug = slugify( $title );
+            $slug = slugify( $title );
             $(this).attr( 'id', $slug );
-        } else {
-            var $slug = $(this).attr( 'id' );
         }
 
         // text to be copied is the URL with the string added after it
@@ -43,17 +41,15 @@ jQuery(document).ready(function($) {
         $(this).click(function(e) {
             navigator.clipboard.writeText( $copyText );
         })
-
     });
-
 
     function slugify( $stringToSlugify ) {
 
         $title_slugfied = $stringToSlugify.toLowerCase();
 
-        var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
-        var to   = "aaaaaeeeeeiiiiooooouuuunc------";
-        for (var i = 0, l = from.length; i < l; i++) {
+        const from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
+        const to   = "aaaaaeeeeeiiiiooooouuuunc------";
+        for (let i = 0, l = from.length; i < l; i++) {
             $title_slugfied = $title_slugfied.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
         }
 
@@ -61,8 +57,7 @@ jQuery(document).ready(function($) {
                 .replace(/\s+/g, '-') // collapse whitespace and replace by -
                 .replace(/-+/g, '-'); // collapse dashes
 
-        return( $title_slugfied );
+        return $title_slugfied;
     }
-
 
 });

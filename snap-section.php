@@ -30,7 +30,11 @@ if( file_exists( $autoload_file ) ) {
 
 // enqueue SnapSection scripts
 function cwss_enqueue_scripts() {
-    wp_enqueue_script( 'cwss-js', plugin_dir_url( __FILE__ ) . 'src/js/script.js', array( 'jquery' ), __CWSS_VERSION__, 'true' );
+    if( is_admin() || is_archive() || is_search() ) {
+        return;
+    }
+    
+    wp_enqueue_script( 'cwss-js', plugin_dir_url( __FILE__ ) . 'src/js/script.min.js', array( 'jquery' ), __CWSS_VERSION__, 'true' );
 
     wp_localize_script( 'cwss-js', 'cwssData', 
     array( 
@@ -47,7 +51,7 @@ function cwss_enqueue_styles() {
     if( is_admin() || is_archive() || is_search() ) {
         return;
     }
-    wp_enqueue_style( 'cwss-css', plugin_dir_url( __FILE__ ) . 'src/css/style.css', array(), __CWSS_VERSION__ );
+    wp_enqueue_style( 'cwss-css', plugin_dir_url( __FILE__ ) . 'src/css/style.min.css', array(), __CWSS_VERSION__ );
 }
 add_action( 'wp_enqueue_scripts', 'cwss_enqueue_styles' );
 

@@ -1,0 +1,30 @@
+{
+  "name": "snap-section",
+  "version": "1.0.0",
+  "description": "Using Grunt in this project to minify JS and CSS files.",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eduardocapella/snap-section.git"
+  },
+  "keywords": [
+    "SnapSection",
+    "WordPress",
+    "plugin"
+  ],
+  "author": "Eduardo Capella",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eduardocapella/snap-section/issues"
+  },
+  "homepage": "https://github.com/eduardocapella/snap-section#readme",
+  "devDependencies": {
+    "grunt": "^1.6.1",
+    "grunt-contrib-cssmin": "^5.0.0",
+    "grunt-contrib-uglify": "^5.2.2",
+    "grunt-contrib-watch": "^1.1.0"
+  }
+}
