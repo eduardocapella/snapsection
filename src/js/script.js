@@ -1,9 +1,15 @@
 jQuery(document).ready(function($) {
     
     // get JSON url
-    var WpJsonUrl = document.querySelector( 'link[rel="https://api.w.org/"]' ).href;
+    // var WpJsonUrl = document.querySelector( 'link[rel="https://api.w.org/"]' ).href;
     // then take out the '/wp-json/' part
-    var homeurl = WpJsonUrl.replace( '/wp-json/','' );
+    // var homeurl = WpJsonUrl.replace( '/wp-json/','' );
+    
+    // got this information from the localize_script function in the enqueue_scripts file
+    var homeurl = window.cwssData.homeUrl;
+
+    var homeLocation = window.location.href;
+    console.log( 'AQUI! ' + homeLocation );
 
     // find every <h3> element within the page
     $headings = $( 'body' ).find( 'h3' );
@@ -27,7 +33,7 @@ jQuery(document).ready(function($) {
         let $copyText = $url + '#' + $slug;
 
         // create the copy URL button within the <h3> heading
-        $(this).append( '<button class="cwpl-h3-link-icon"><img src="' + homeurl + '/wp-content/plugins/cw-plugin-learning/includes/img/cwpl-copy-url-link.svg"></button> ');
+        $(this).append( '<button class="cwpl-h3-link-icon"><img src="' + homeurl + '/wp-content/plugins/cw-plugin-learning/includes/img/cwpl-copy-url-link.svg"></button>' );
 
         // copy the text when clicked
         $(this).click(function(e) {
@@ -36,8 +42,6 @@ jQuery(document).ready(function($) {
 
     });
 
-
-    
 
     function slugify( $stringToSlugify ) {
 
