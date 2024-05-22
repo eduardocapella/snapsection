@@ -14,6 +14,10 @@ jQuery(document).ready(function($) {
     // find every <h3> element within the page
     $headings = $( 'body' ).find( 'h3' );
 
+
+
+    
+
     // remove any IDs in the URL
     $url = $(location).attr( 'href').split('#')[0];
 
