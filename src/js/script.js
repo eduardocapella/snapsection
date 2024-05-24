@@ -25,17 +25,17 @@ jQuery(document).ready(function($) {
         // remember that var or let declares a variable
         let $slug = $(this).attr( 'id' );
 
-        if ( ! $slug ) {
-            let $title = $(this).text();
-            $slug = slugify( $title );
-            $(this).attr( 'id', $slug );
-        }
+        // if ( ! $slug ) {
+        //     let $title = $(this).text();
+        //     $slug = slugify( $title );
+        //     $(this).attr( 'id', $slug );
+        // }
 
         // text to be copied is the URL with the string added after it
         let $copyText = $url + '#' + $slug;
 
         // create the copy URL button within the <h3> heading
-        $(this).append( '<button class="cwpl-h3-link-icon"><img src="' + homeurl + '/wp-content/plugins/cw-plugin-learning/includes/img/cwpl-copy-url-link.svg"></button>' );
+        $(this).append( '<button class="cwpl-h3-link-icon"><img src="' + homeurl + '/wp-content/plugins/snap-section/includes/img/cwpl-copy-url-link.svg"></button>' );
 
         // copy the text when clicked
         $(this).click(function(e) {
