@@ -1,24 +1,19 @@
 module.exports = function(grunt) {
 
     // Project configuration.
+    // How it works:
+    // 1. The "uglify" task will take the "src/js/script.js" file and create a minified version of it in the "src/js/script.min.js" file.
+    // 2. The "cssmin" task will take the "src/css/*.css" files and create a minified version of them in the "src/css/*.min.css" files.
+    // 3. The "watch" task will watch for changes in the "src/js/*.js" and "src/css/*.css" files and run the "uglify" and "cssmin" tasks respectively.
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        watch: {
-            sass: {
-                files: ['src/js/script.js'],
-                tasks: ['uglify']
-            }
-        },
-
         uglify: {
-            options: {
-                // banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-            },
             build: {
                 src: 'src/js/script.js',
                 dest: 'src/js/script.min.js'
-            }
+            },
         },
 
         cssmin: {
@@ -31,7 +26,17 @@ module.exports = function(grunt) {
                     ext: '.min.css'
                 }]
             }
-          }
+        },
+        watch: {
+            css: {
+                files: ['src/css/*.css', '!src/css/*.min.css'],
+                tasks: ['cssmin']
+            },
+            js: {
+                files: ['src/js/*.js', '!src/js/*.min.js'],
+                tasks: ['uglify']
+            },
+        }
 
     });
 
@@ -42,15 +47,17 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     /* 
-     * Load the plugin that provides the "watch" task.
-     * https://www.npmjs.com/package/grunt-contrib-watch
-    */
-    grunt.loadNpmTasks('grunt-contrib-watch');
-
-    /* 
      * Load the "Cssmin" task 
      * https://www.npmjs.com/package/grunt-contrib-cssmin
     */
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+
+    /* 
+     * Load the plugin that provides the "watch" task.
+     * https://www.npmjs.com/package/grunt-contrib-watch
+    */
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    
+    grunt.registerTask('default', ['watch','uglify', 'cssmin']);
 
 };

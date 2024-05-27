@@ -15,14 +15,20 @@
  * Requires Plugins:  
  */
 
-Namespace Main;
+Namespace CapellaWeb\SnapSection;
+
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 // Constants
-define ( '__CWSS_VERSION__', '1.0.0' );
+define ( 'PLUGIN_VERSION', '1.0.1' );
 
+define ( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+define ( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+define ( 'CSS_URL', PLUGIN_URL . 'src/css/'  );
+define ( 'JS_URL', PLUGIN_URL . 'src/js/' );
 
 
 // Include Composer's Autoloader if file exist
@@ -37,7 +43,7 @@ function cwss_enqueue_scripts() {
         return;
     }
 
-    wp_enqueue_script( 'cwss-js', plugin_dir_url( __FILE__ ) . 'src/js/script.min.js', array( 'jquery' ), __CWSS_VERSION__, 'true' );
+    wp_enqueue_script( 'cwss-js', JS_URL . 'script.min.js', array( 'jquery' ), PLUGIN_VERSION, 'true' );
 
     wp_localize_script( 'cwss-js', 'cwssData', 
     array( 
@@ -55,34 +61,6 @@ function cwss_enqueue_styles() {
     if( is_admin() || is_archive() || is_search() ) {
         return;
     }
-    wp_enqueue_style( 'cwss-css', plugin_dir_url( __FILE__ ) . 'src/css/style.min.css', array(), __CWSS_VERSION__ );
+    wp_enqueue_style( 'cwss-css', CSS_URL . 'style.min.css', array(), PLUGIN_VERSION );
 }
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\cwss_enqueue_styles' );
-
-// if( !is_admin() && !is_archive() && !is_search() ) {
-//     add_action( 'wp_enqueue_scripts', 'cwss_enqueue_styles' );
-// }
-
-
-add_filter( 'the_content', __NAMESPACE__ . '\add_id_to_h3' );
-
-function add_id_to_h3( $content ) {
-    $dom = new \DOMDocument();
-    @$dom->loadHTML( mb_convert_encoding( $content, 'HTML-ENTITIES', 'UTF-8' ) );
-    $h3s = $dom->getElementsByTagName( 'h3' );
-
-    $i = 0;
-    foreach ( $h3s as $h3 ) {
-        if ( $h3->hasAttribute( 'id' ) ) {
-            continue;
-        } else {
-            $h3Text = $h3->nodeValue;
-            $h3Text = sanitize_title( $h3Text );
-            $h3->setAttribute( 'id', $h3Text );
-        }
-    }
-
-    $html = $dom->saveHTML();
-    return $html;
-}
-
