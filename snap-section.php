@@ -15,7 +15,7 @@
  * Requires Plugins:  
  */
 
-Namespace CapellaWeb\SnapSection;
+Namespace Cwss;
 
 
 // Exit if accessed directly.
@@ -24,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 // Constants
 define ( 'PLUGIN_VERSION', '1.0.1' );
 
+define ( 'PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define ( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define ( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
@@ -49,11 +50,19 @@ function cwss_enqueue_scripts() {
     array( 
         'homeUrl'    => home_url(),
         'currentUrl' => get_the_permalink(),
-        'pluginURL'  => plugin_dir_url( __FILE__ )
+        'pluginURL'  => plugin_dir_url( __FILE__ ),
         ) 
     );
 }
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\cwss_enqueue_scripts' );
+
+
+$iconColor = get_option( 'snapsection_icon_color' );
+echo '<style>';
+    echo ':root {';
+        echo '--icon-color:' . $iconColor .' !important';
+    echo '}';
+echo '</style>';
 
 
 // enqueue SnapSection styles
@@ -64,3 +73,25 @@ function cwss_enqueue_styles() {
     wp_enqueue_style( 'cwss-css', CSS_URL . 'style.min.css', array(), PLUGIN_VERSION );
 }
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\cwss_enqueue_styles' );
+
+
+function enqueue_admin_scripts( $hook ) {
+    
+    // Since I used the add_menu_page() function, the settings page slug must have the prefix 'toplevel_page_'
+    if ( 'toplevel_page_snapsection' != $hook ) {
+        return;
+    }
+
+    // Adicione o script de seleção de cores
+    wp_enqueue_script( 'wp-color-picker' );
+
+    // Adicione o estilo de seleção de cores
+    wp_enqueue_style( 'wp-color-picker' );
+
+}
+
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ .  '\enqueue_admin_scripts' );
+
+
+
+$settings = new Classes\SnapSectionSettingsPage();

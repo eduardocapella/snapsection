@@ -3,6 +3,7 @@ jQuery(document).ready(function($) {
     // got this information from the localize_script function in the enqueue_scripts file
     let homeUrl = window.cwssData.homeUrl;
     let currentUrl = window.cwssData.currentUrl;
+    // let iconColor = window.cwssData.iconColor;
     
     var hash = window.location.hash;
 

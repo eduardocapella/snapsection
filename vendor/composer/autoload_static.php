@@ -13,7 +13,7 @@ class ComposerStaticInit85b1d949fde1c9de4b0bf4d9da3eb450
         ),
         'C' => 
         array (
-            'Capella\\Plugins\\' => 16,
+            'Cwss\\' => 5,
         ),
     );
 
@@ -22,7 +22,7 @@ class ComposerStaticInit85b1d949fde1c9de4b0bf4d9da3eb450
         array (
             0 => __DIR__ . '/..' . '/dealerdirect/phpcodesniffer-composer-installer/src',
         ),
-        'Capella\\Plugins\\' => 
+        'Cwss\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),

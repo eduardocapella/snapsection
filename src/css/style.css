@@ -48,6 +48,13 @@ h3.cwss-h3 {
     fill: var( --icon-color );
 }
 
+/* 
+SVG path fill color
+.cwss-h3-link-icon svg path {
+    fill: pink;
+}
+*/
+
 
 .cwss-h3-link-icon img {
     display:block;
