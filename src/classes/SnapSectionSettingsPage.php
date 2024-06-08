@@ -15,6 +15,7 @@ class SnapSectionSettingsPage {
         add_filter( "plugin_action_links_$this->plugin", array( $this, 'settings_link' ) );
     }
 
+
     public function settings_link( $links ) {
         $settings_link = '<a href="admin.php?page=snapsection">' . __( 'Settings', 'snap-section' ) . '</a>';
         array_push( $links, $settings_link );
@@ -23,7 +24,8 @@ class SnapSectionSettingsPage {
     }
 
     public function create_settings_page() {
-        // 
+        // add_menu_page()
+        // https://developer.wordpress.org/reference/functions/add_menu_page/
         add_menu_page(
             'SnapSection',
             'SnapSection',
@@ -56,18 +58,19 @@ class SnapSectionSettingsPage {
 
         // show error/update messages
         settings_errors( 'snapsection' );
-        
+
         ?>
         <div class="wrap">
             <h2><?php echo __( 'SnapSection Settings', 'snap-section' ); ?></h2>
-            <p><?php echo __( 'The plugin that makes it easier to share a section of your page, article or blog post.', 'snap-section' ); ?></p>
+            <p><?php echo __( 'The plugin that makes it easier to share a section of your page, article or blog post.', 'snap-section' ); ?>
+            </p>
             <hr>
             <form method="POST" action="options.php">
                 <?php
-                settings_fields( 'snapsection_fields' );
-                do_settings_sections( 'snapsection' );
-                submit_button( 'Save Settings' );
-                ?>
+                        settings_fields( 'snapsection_fields' );
+                        do_settings_sections( 'snapsection' );
+                        submit_button( 'Save Settings' );
+                        ?>
             </form>
         </div>
         <?php
@@ -102,10 +105,10 @@ class SnapSectionSettingsPage {
 
         register_setting( 'snapsection_fields', 'snapsection_icon_image' );
         register_setting( 'snapsection_fields', 'snapsection_icon_color' );
-        register_setting( 'snapsection_fields', 'snapsection_top' );
-        register_setting( 'snapsection_fields', 'snapsection_icon' );
+        register_setting( 'snapsection_fields', 'snapsection_icon_top' );
+        register_setting( 'snapsection_fields', 'snapsection_icon_size' );
 
-        // add_settings_field( 
+        // add_settings_field(
         //     string $id,
         //     string $title,
         //     callable $callback,
@@ -115,59 +118,59 @@ class SnapSectionSettingsPage {
         // )
         // https://developer.wordpress.org/reference/functions/add_settings_field/
 
-        add_settings_field( 
+        add_settings_field(
             'snapsection_icon_image',
             __( 'Icon', 'snap-section' ),
             array( $this, 'snapsection_icon_image' ),
             'snapsection',
             'snapsection_section',
-            $arguments = array( 
+            $arguments = array(
                 'label_for' => 'snapsection_icon_image'
             )
         );
 
-        add_settings_field( 
+        add_settings_field(
             'snapsection_icon_color',
             __( 'Icon Color', 'snap-section' ),
             array( $this, 'field_color_callback' ),
             'snapsection',
             'snapsection_section',
-            $arguments = array( 
+            $arguments = array(
                 'label_for' => 'snapsection_icon_color'
             )
         );
-        
-        add_settings_field( 
-            'snapsection_icon',
-            __( 'Icon', 'snap-section' ),
-            array( $this, 'field_icon_choice_callback' ),
+
+        add_settings_field(
+            'snapsection_icon_size',
+            __( 'Icon Size', 'snap-section' ),
+            array( $this, 'field_icon_size_callback' ),
             'snapsection',
             'snapsection_section',
-            $arguments = array( 
-                'label_for' => 'snapsection_icon'
+            $arguments = array(
+                'label_for' => 'snapsection_icon_size'
             )
         );
-        
-        add_settings_field( 
-            'snapsection_top',
+
+        add_settings_field(
+            'snapsection_icon_top',
             __( 'Top position', 'snap-section' ),
             array( $this, 'field_top_position_callback' ),
             'snapsection',
             'snapsection_section',
-            $arguments = array( 
-                'label_for' => 'snapsection_top'
+            $arguments = array(
+                'label_for' => 'snapsection_icon_top'
             )
         );
 
-        
+
     }
 
     public function field_color_callback( $arguments ) {
         // Obtenha o valor da configuração que registramos com register_setting()
-        $value = get_option($arguments['label_for']);
+        $value = get_option( $arguments[ 'label_for' ], '#0099FF' );
 
         // Saída do campo
-        echo '<input class="color-picker" name="' . esc_attr($arguments['label_for']) . '" id="' . esc_attr($arguments['label_for']) . '" type="text" value="' . esc_attr($value) . '" />';
+        echo '<input class="color-picker" name="' . esc_attr($arguments['label_for']) . '" id="' . esc_attr( $arguments[ 'label_for' ] ) . '" type="text" value="' . esc_attr( $value ) . '" />';
         // echo '<input class="color-code" name="' . esc_attr($arguments['label_for'] . '_code') . '" id="' . esc_attr($arguments['label_for'] . '_code') . '" type="text" value="' . esc_attr($value) . '" />';
 
         // Adicione o script para inicializar o seletor de cores
@@ -182,22 +185,33 @@ class SnapSectionSettingsPage {
         </script>';
     }
 
-    public function field_icon_choice_callback( $arguments ) {
-        echo '<input name="' . $arguments[ 'label_for' ] . '" id="' . $arguments[ 'label_for' ] . '" type="text" value="' . get_option( $arguments[ 'label_for' ] ) . '" />';
+    public function field_icon_size_callback( $arguments ) {
+        if( empty( get_option( $arguments[ 'label_for' ], '1' ) ) ) {
+            $iconSize = 1;
+        } else {
+            $iconSize = get_option( $arguments[ 'label_for' ] );
+        }
+        echo '<input name="' . $arguments[ 'label_for' ] . '" id="' . $arguments[ 'label_for' ] . '" type="number" min="0.5" max="1" step="0.1" value="' . $iconSize . '" />';
         ?>
         <p class="cwss-field-description">
-		    <?php esc_html_e( 'Select your icon.', 'snap-section' ); ?>
-	    </p>
-        <?php
+            <?php esc_html_e( 'Fine adjustment of your icon size. From 0.5 to 1.', 'snap-section' ); ?>
+        </p>
+    <?php
     }
 
+
     public function field_top_position_callback( $arguments ) {
-        echo '<input name="' . $arguments[ 'label_for' ] . '" id="' . $arguments[ 'label_for' ] . '" type="number" value="' . get_option( $arguments[ 'label_for' ] ) . '" />';
+        if( empty( get_option( $arguments[ 'label_for' ], '0' ) ) ) {
+            $iconTop = 10;
+        } else {
+            $iconTop = get_option( $arguments[ 'label_for' ] );
+        }
+        echo '<input name="' . $arguments[ 'label_for' ] . '" id="' . $arguments[ 'label_for' ] . '" type="number" value="' . $iconTop . '" />';
         ?>
         <p class="cwss-field-description">
-		    <?php esc_html_e( 'Adjust the top position. Values in pixels.', 'snap-section' ); ?>
-	    </p>
-        <?php
+            <?php esc_html_e( 'Adjust the top position. Values in pixels.', 'snap-section' ); ?>
+        </p>
+    <?php
     }
 
 
@@ -208,9 +222,9 @@ class SnapSectionSettingsPage {
 
         // Opções para o campo de botões de opção
         $options = array(
-            'option1' => 'src/img/cwpl-copy-url-link.svg',
-            'option2' => 'src/img/cwpl-copy-url-link.svg',
-            'option3' => 'src/img/cwpl-copy-url-link.svg',
+            'option1' => 'src/img/icon1.svg',
+            'option2' => 'src/img/icon4.svg',
+            'option3' => 'src/img/icon8.svg',
         );
 
         // Saída do campo
@@ -219,7 +233,7 @@ class SnapSectionSettingsPage {
                 // echo '<input id="' . esc_attr( $arguments[ 'label_for' ] . '_' . $key ) . '" name="' . esc_attr( $arguments[ 'label_for' ] ) . '" type="radio"' . esc_attr( $key ) . '" ' . checked( $value, $key, false ) . ' />';
 
                 echo '<input id="' . esc_attr($arguments['label_for'] . '_' . $key) . '" name="' . esc_attr($arguments['label_for']) . '" type="radio" value="' . esc_attr($key) . '" ' . checked($value, $key, false) . ' />';
-            
+
                 echo '<label style="display:inline-block;padding:1rem;background:white;border:1px solid #CCC;margin-left:10px;border-radius:5px;width:20px;height:20px;" for="' . esc_attr($arguments['label_for'] . '_' . $key) . '">' . '<img width=22 height=22 src="' . PLUGIN_URL . $label . '"></label><br />';
             echo '</div>';
         }

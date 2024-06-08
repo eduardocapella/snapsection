@@ -2,6 +2,7 @@
     --cwss-icon-margin-left: .32rem;
     --cwss-icon-width: 2rem;
     --icon-color: #0099FF;
+    --icon-top: '10px';
 }
 
 h3.cwss-h3 {
@@ -16,7 +17,7 @@ h3.cwss-h3 {
 
 .cwss-h3-link-icon {
     display: block;
-    width: 100%;
+    width: 80%;
     max-width: var( --cwss-icon-width);
 
     padding: 0;
@@ -32,7 +33,7 @@ h3.cwss-h3 {
 
     position: absolute;
     right: 0;
-    top: 0;
+    top: var(--icon-top);
 }
 
 .cwss-h3-link-icon:hover {

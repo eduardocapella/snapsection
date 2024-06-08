@@ -17,7 +17,6 @@
 
 Namespace Cwss;
 
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
@@ -38,60 +37,44 @@ if( file_exists( $autoload_file ) ) {
     require_once $autoload_file;
 }
 
-// enqueue SnapSection scripts
-function cwss_enqueue_scripts() {
-    if( is_admin() || is_archive() || is_search() ) {
-        return;
-    }
 
-    wp_enqueue_script( 'cwss-js', JS_URL . 'script.min.js', array( 'jquery' ), PLUGIN_VERSION, 'true' );
-
-    wp_localize_script( 'cwss-js', 'cwssData', 
-    array( 
-        'homeUrl'    => home_url(),
-        'currentUrl' => get_the_permalink(),
-        'pluginURL'  => plugin_dir_url( __FILE__ ),
-        ) 
-    );
-}
-add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\cwss_enqueue_scripts' );
-
+// quando mudar o nome de uma das opções, tem que deletar a antiga. QUando se cria uma linha só (array ou json), o índice depreciado/deletado não vai pro banco de dados
 
 $iconColor = get_option( 'snapsection_icon_color' );
+$iconTop = get_option( 'snapsection_icon_top' ) . 'px';
+$iconSize = get_option( 'snapsection_icon_size' );
+
+
+
 echo '<style>';
     echo ':root {';
-        echo '--icon-color:' . $iconColor .' !important';
+        echo '--icon-color:' . $iconColor .' !important;';
+        echo '--icon-top:' . $iconTop .' !important;';
     echo '}';
 echo '</style>';
 
 
-// enqueue SnapSection styles
-function cwss_enqueue_styles() {
-    if( is_admin() || is_archive() || is_search() ) {
-        return;
+function cwss() {
+    // static é uma palavra mágica do PHP que mantém o valor da variável entre as chamadas da função
+    // essa variável é usada para armazenar a instância da classe dentro dessa função
+    static $instance = null;
+    if ( is_null( $instance ) ) {
+        $instance = new Classes\PluginInit();
     }
-    wp_enqueue_style( 'cwss-css', CSS_URL . 'style.min.css', array(), PLUGIN_VERSION );
-}
-add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\cwss_enqueue_styles' );
-
-
-function enqueue_admin_scripts( $hook ) {
-    
-    // Since I used the add_menu_page() function, the settings page slug must have the prefix 'toplevel_page_'
-    if ( 'toplevel_page_snapsection' != $hook ) {
-        return;
-    }
-
-    // Adicione o script de seleção de cores
-    wp_enqueue_script( 'wp-color-picker' );
-
-    // Adicione o estilo de seleção de cores
-    wp_enqueue_style( 'wp-color-picker' );
-
+    return $instance;
 }
 
-add_action( 'admin_enqueue_scripts', __NAMESPACE__ .  '\enqueue_admin_scripts' );
+cwss();
 
+// function my_plugin_activation() {
+    // add_option( 'snapsection_icon_color', '#0099FF' );
+    // add_option( 'snapsection_icon_top', '0' );
+    // add_option( 'snapsection_icon_size', '1' );
 
-
-$settings = new Classes\SnapSectionSettingsPage();
+    // salvar quando o plugin foi ativado, por exemplo, faz sentido
+    // $activationDate = date( 'Y-m-d H:i:s' );
+    //  dá pra adicionar essa data como internal, o que significa que é salvo para uso interno, mas não é exibido para o usuário
+    // exemplo: add_option( 'snapsection_activation_date_internal', $activationDate, '', 'no' );
+// }
+// register_activation_hook( __FILE__, array( 'Cwss\SnapSectionSettinsPage', 'field_top_position_callback' ) );
+// o WordPress executa o callback em outro arquivo, por isso que precisamos do caminho completo da casa
