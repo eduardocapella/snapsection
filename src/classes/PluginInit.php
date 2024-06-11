@@ -33,13 +33,20 @@ class PluginInit {
 
         wp_enqueue_script( 'cwss-js', JS_URL . 'script.min.js', array( 'jquery' ), PLUGIN_VERSION, 'true' );
 
+
+        $snapSectionDynamic = get_option( 'snapsection_dynamic' );
+        print_r( '<pre>' );
+        print_r( $snapSectionDynamic );
+        print_r( '</pre>' );
+
+
         wp_localize_script( 'cwss-js', 'cwssData', 
             array( 
                 'homeUrl'    => home_url(),
                 'currentUrl' => get_the_permalink(),
-                'iconSVG'    => get_option( 'snapsection_icon_image' ),
+                'iconSVG'    => $snapSectionDynamic['icon'],
                 'pluginURL'  => plugin_dir_url( __FILE__ ),
-                'iconSize'   => get_option( 'snapsection_icon_size' )
+                'iconSize'   => $snapSectionDynamic['size']
             ) 
         );
     }

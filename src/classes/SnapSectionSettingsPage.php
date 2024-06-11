@@ -208,8 +208,7 @@ class SnapSectionSettingsPage {
 
         if (!isset($snapSectionDynamic[ 'top' ])) {
             $snapSectionDynamic[ 'top' ] = 10;
-        }
-        ?>
+        } ?>
 
         <input
             id="snapsection_dynamic_top"
@@ -221,8 +220,8 @@ class SnapSectionSettingsPage {
         <p class="cwss-field-description">
             <?php esc_html_e( 'Adjust the top position. Values in pixels.', 'snap-section' ); ?>
         </p>
-    <?php }
 
+    <?php }
 
 
     public function snapsection_icon_image( $arguments ) {

@@ -4,7 +4,9 @@ jQuery(document).ready(function ($) {
 	let currentUrl = window.cwssData.currentUrl;
 	let iconSize = window.cwssData.iconSize;
 	let iconSvg = window.cwssData.iconSVG;
-	// console.log('iconSvg', iconSvg);
+	
+	console.log('iconSize', iconSize);
+	console.log('iconSvg', iconSvg);
 	// let iconColor = window.cwssData.iconColor;
 
 	var hash = window.location.hash;

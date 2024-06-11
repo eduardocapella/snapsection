@@ -40,21 +40,17 @@ if( file_exists( $autoload_file ) ) {
 
 // quando mudar o nome de uma das opções, tem que deletar a antiga. Quando se cria uma linha só (array ou json), o índice depreciado/deletado não vai pro banco de dados
 
-$iconColor = get_option( 'snapsection_icon_color' );
-$iconTop = get_option( 'snapsection_icon_top' ) . 'px';
-$iconSize = get_option( 'snapsection_icon_size' );
+$snapSectionDynamic = get_option( 'snapsection_dynamic' ); ?>
+
+<style>
+    :root {
+        --icon-color: <?php echo $snapSectionDynamic[ 'color' ] ?> !important;
+        --icon-top: <?php echo $snapSectionDynamic[ 'top' ] ?> !important;
+        }
+</style>
 
 
-
-echo '<style>';
-    echo ':root {';
-        echo '--icon-color:' . $iconColor .' !important;';
-        echo '--icon-top:' . $iconTop .' !important;';
-    echo '}';
-echo '</style>';
-
-
-function cwss() {
+<?php function cwss() {
     // static é uma palavra mágica do PHP que mantém o valor da variável entre as chamadas da função
     // essa variável é usada para armazenar a instância da classe dentro dessa função
     static $instance = null;
