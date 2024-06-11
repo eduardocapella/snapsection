@@ -67,10 +67,10 @@ class SnapSectionSettingsPage {
             <hr>
             <form method="POST" action="options.php">
                 <?php
-                        settings_fields( 'snapsection_fields' );
-                        do_settings_sections( 'snapsection' );
-                        submit_button( 'Save Settings' );
-                        ?>
+                settings_fields( 'snapsection_fields' );
+                do_settings_sections( 'snapsection' );
+                submit_button( 'Save Settings' );
+                ?>
             </form>
         </div>
         <?php
@@ -93,20 +93,8 @@ class SnapSectionSettingsPage {
     }
 
     public function setup_fields() {
-        // add_settings_field(
-        //     string $id,
-        //     string $title,
-        //     callable $callback,
-        //     string $page,
-        //     string $section = ‘default’,
-        //     array $args = array()
-        // )
-        // https://developer.wordpress.org/reference/functions/add_settings_field/
 
-        register_setting( 'snapsection_fields', 'snapsection_icon_image' );
-        register_setting( 'snapsection_fields', 'snapsection_icon_color' );
-        register_setting( 'snapsection_fields', 'snapsection_icon_top' );
-        register_setting( 'snapsection_fields', 'snapsection_icon_size' );
+        register_setting( 'snapsection_fields', 'snapsection_dynamic', 'snapsection_sanitize_options' );
 
         // add_settings_field(
         //     string $id,
@@ -162,19 +150,26 @@ class SnapSectionSettingsPage {
             )
         );
 
-
     }
 
     public function field_color_callback( $arguments ) {
         // Obtenha o valor da configuração que registramos com register_setting()
-        $value = get_option( $arguments[ 'label_for' ], '#0099FF' );
+        $snapSectionDynamic = get_option( 'snapsection_dynamic' );
+        if ( !isset( $snapSectionDynamic[ 'color' ] ) ) {
+            $snapSectionDynamic[ 'color' ] = '#0099FF';
+        } ?>
+        
+        <?php // Saída do campo ?>
+        <input
+            class="color-picker"
+            name="snapsection_dynamic[color]"
+            id="snapsection_dynamic_color"
+            type="text"
+            value="<?php echo $snapSectionDynamic[ 'color' ] ?>"
+        />
 
-        // Saída do campo
-        echo '<input class="color-picker" name="' . esc_attr($arguments['label_for']) . '" id="' . esc_attr( $arguments[ 'label_for' ] ) . '" type="text" value="' . esc_attr( $value ) . '" />';
-        // echo '<input class="color-code" name="' . esc_attr($arguments['label_for'] . '_code') . '" id="' . esc_attr($arguments['label_for'] . '_code') . '" type="text" value="' . esc_attr($value) . '" />';
-
-        // Adicione o script para inicializar o seletor de cores
-        echo '<script type="text/javascript">
+        <?php // Adicione o script para inicializar o seletor de cores ?>
+        <script type="text/javascript">
             jQuery(document).ready(function($) {
                 $(".color-picker").wpColorPicker({
                     change: function(event, ui) {
@@ -182,61 +177,106 @@ class SnapSectionSettingsPage {
                     }
                 });
             });
-        </script>';
-    }
+        </script>
+
+    <?php }
 
     public function field_icon_size_callback( $arguments ) {
-        if( empty( get_option( $arguments[ 'label_for' ], '1' ) ) ) {
-            $iconSize = 1;
-        } else {
-            $iconSize = get_option( $arguments[ 'label_for' ] );
-        }
-        echo '<input name="' . $arguments[ 'label_for' ] . '" id="' . $arguments[ 'label_for' ] . '" type="number" min="0.5" max="1" step="0.1" value="' . $iconSize . '" />';
-        ?>
+        $snapSectionDynamic = get_option( 'snapsection_dynamic' );
+        if ( !isset( $snapSectionDynamic[ 'size' ] ) ) {
+            $snapSectionDynamic[ 'size' ] = 1;
+        } ?>
+
+        <input
+            name="snapsection_dynamic[size]"
+            id="snapsection_dynamic_size"
+            type="number"
+            min="0.5"
+            max="1"
+            step="0.1"
+            value="<?php echo $snapSectionDynamic[ 'size' ] ?>" 
+        />
+        
         <p class="cwss-field-description">
             <?php esc_html_e( 'Fine adjustment of your icon size. From 0.5 to 1.', 'snap-section' ); ?>
         </p>
-    <?php
-    }
+    <?php }
 
 
     public function field_top_position_callback( $arguments ) {
-        if( empty( get_option( $arguments[ 'label_for' ], '0' ) ) ) {
-            $iconTop = 10;
-        } else {
-            $iconTop = get_option( $arguments[ 'label_for' ] );
+        $snapSectionDynamic = get_option( 'snapsection_dynamic' );
+
+        if (!isset($snapSectionDynamic[ 'top' ])) {
+            $snapSectionDynamic[ 'top' ] = 10;
         }
-        echo '<input name="' . $arguments[ 'label_for' ] . '" id="' . $arguments[ 'label_for' ] . '" type="number" value="' . $iconTop . '" />';
         ?>
+
+        <input
+            id="snapsection_dynamic_top"
+            name="snapsection_dynamic[top]"
+            type="number"
+            value="<?php echo $snapSectionDynamic[ 'top' ] ?>"
+        />
+        
         <p class="cwss-field-description">
             <?php esc_html_e( 'Adjust the top position. Values in pixels.', 'snap-section' ); ?>
         </p>
-    <?php
-    }
+    <?php }
 
 
 
     public function snapsection_icon_image( $arguments ) {
         // Obtenha o valor da configuração que registramos com register_setting()
-        $value = get_option($arguments['label_for']);
+        // $value = get_option($arguments[ 'label_for' ], 'option1');
+        
+        if (false === get_option( 'snapsection_dynamic' ) ) {
+            // A opção não existe, então a adiciona com um valor inicial padrão (array vazio)
+            add_option( 'snapsection_dynamic', array() );
+        }
+        $snapSectionDynamic = get_option( 'snapsection_dynamic' );
+
+        if ( !isset( $snapSectionDynamic[ 'icon' ] ) ) {
+            $snapSectionDynamic[ 'icon' ] = 'option1';
+        }
 
         // Opções para o campo de botões de opção
-        $options = array(
+        $iconsAvailable = array(
             'option1' => 'src/img/icon1.svg',
             'option2' => 'src/img/icon4.svg',
             'option3' => 'src/img/icon8.svg',
         );
+        // textos passíveis de tradução nunca são salvos no banco de dados
+        // não salvar caminhos / paths no banco de dados
+        foreach( $iconsAvailable as $iconValue => $iconPath ) { ?>
+            <input
+                id='snapsection_dynamic_icon'
+                type='radio'
+                name='snapsection_dynamic[icon]'
+                value='<?php echo $iconValue ?>'
+                <?php checked( $snapSectionDynamic[ 'icon' ], $iconValue ) ?>
+            >
 
-        // Saída do campo
-        foreach ( $options as $key => $label ) {
-            echo '<div style="display:flex;align-items: center;margin-bottom:.5rem;" class="cwss-container-options">';
-                // echo '<input id="' . esc_attr( $arguments[ 'label_for' ] . '_' . $key ) . '" name="' . esc_attr( $arguments[ 'label_for' ] ) . '" type="radio"' . esc_attr( $key ) . '" ' . checked( $value, $key, false ) . ' />';
+            <label for="snapsection_dynamic_icon">
+                <img 
+                    width=22
+                    height=22
+                    src="<?php echo PLUGIN_URL . $iconPath ?>"
+                >
+            </label>
+        <?php } ?>
 
-                echo '<input id="' . esc_attr($arguments['label_for'] . '_' . $key) . '" name="' . esc_attr($arguments['label_for']) . '" type="radio" value="' . esc_attr($key) . '" ' . checked($value, $key, false) . ' />';
+        <?php
+       
+    }
 
-                echo '<label style="display:inline-block;padding:1rem;background:white;border:1px solid #CCC;margin-left:10px;border-radius:5px;width:20px;height:20px;" for="' . esc_attr($arguments['label_for'] . '_' . $key) . '">' . '<img width=22 height=22 src="' . PLUGIN_URL . $label . '"></label><br />';
-            echo '</div>';
-        }
+    function snapsection_sanitize_options( $input ) {
+        $new_input = array();
+        $new_input[ 'image' ] = sanitize_text_field( $input[ 'image' ]);
+        $new_input[ 'color' ] = sanitize_hex_color( $input[ 'color' ]);
+        $new_input[ 'top' ] = sanitize_text_field( $input[ 'top' ]);
+        $new_input[ 'size' ] = absint( $input[ 'size' ]);
+    
+        return $new_input;
     }
 
 }

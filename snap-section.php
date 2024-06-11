@@ -38,7 +38,7 @@ if( file_exists( $autoload_file ) ) {
 }
 
 
-// quando mudar o nome de uma das opções, tem que deletar a antiga. QUando se cria uma linha só (array ou json), o índice depreciado/deletado não vai pro banco de dados
+// quando mudar o nome de uma das opções, tem que deletar a antiga. Quando se cria uma linha só (array ou json), o índice depreciado/deletado não vai pro banco de dados
 
 $iconColor = get_option( 'snapsection_icon_color' );
 $iconTop = get_option( 'snapsection_icon_top' ) . 'px';
@@ -65,6 +65,30 @@ function cwss() {
 }
 
 cwss();
+
+// to create only one row in the database, use get_option() only one time and use an array as the second parameter
+// add_action( 'init', function() {
+
+//     $args = array(
+//         'icon'  => 'icon1.svg',
+//         'color' => '#0099FF',
+//         'top'   => '5',
+//         'size'  => '1'
+//     );
+
+//     // get_option( 'snap_section_dynamic', array(
+//     //     'icon'  => 'icon1.svg',
+//     //     'color' => '#FF0000',
+//     //     'top'   => '10',
+//     //     'size'  => '1'
+//     // ));
+
+//     update_option( 'snap_section_dynamic', $args );
+
+//     // colocar isso no uninstall.php
+//     // delete_option( 'snap_section_dynamic' );
+
+// });
 
 // function my_plugin_activation() {
     // add_option( 'snapsection_icon_color', '#0099FF' );
