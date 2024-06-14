@@ -38,19 +38,14 @@ if( file_exists( $autoload_file ) ) {
 }
 
 
+// print_r( '<pre>AQUI!!' );
+// print_r( $options::getOption( 'color' ) );
+// print_r( '</pre>' );
+
 // quando mudar o nome de uma das opções, tem que deletar a antiga. Quando se cria uma linha só (array ou json), o índice depreciado/deletado não vai pro banco de dados
 
-$snapSectionDynamic = get_option( 'snapsection_dynamic' ); ?>
 
-<style>
-    :root {
-        --icon-color: <?php echo $snapSectionDynamic[ 'color' ] ?> !important;
-        --icon-top: <?php echo $snapSectionDynamic[ 'top' ] ?> !important;
-        }
-</style>
-
-
-<?php function cwss() {
+function cwss() {
     // static é uma palavra mágica do PHP que mantém o valor da variável entre as chamadas da função
     // essa variável é usada para armazenar a instância da classe dentro dessa função
     static $instance = null;
@@ -62,6 +57,16 @@ $snapSectionDynamic = get_option( 'snapsection_dynamic' ); ?>
 
 cwss();
 
+$options = new Classes\Options();
+?>
+<style>
+    :root {
+        --icon-color: <?php echo $options::getOption( 'color' ) ?> !important;
+        --icon-top: <?php echo $options::getOption( 'top' ) ?> !important;
+        }
+</style>
+
+<?php
 // to create only one row in the database, use get_option() only one time and use an array as the second parameter
 // add_action( 'init', function() {
 

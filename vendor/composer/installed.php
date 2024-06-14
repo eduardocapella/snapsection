@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'capella/plugins',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '88250f4be2a1550ac07e48c0dade0b711c6af84a',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'capella/plugins' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '88250f4be2a1550ac07e48c0dade0b711c6af84a',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

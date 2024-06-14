@@ -10,7 +10,7 @@ class PluginInit {
         // garanto que todas as Classes sejam instanciadas apenas uma vez
         // e posso chamar a classe SnapSectionSettingsPage() chamando a função cwss()
         $this->settings = new SnapSectionSettingsPage();
-        
+
         add_action( 'wp_enqueue_scripts', array( $this, 'cwss_enqueue_styles' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'cwss_enqueue_scripts' ) );
@@ -32,21 +32,15 @@ class PluginInit {
         }
 
         wp_enqueue_script( 'cwss-js', JS_URL . 'script.min.js', array( 'jquery' ), PLUGIN_VERSION, 'true' );
-
-
-        $snapSectionDynamic = get_option( 'snapsection_dynamic' );
-        print_r( '<pre>' );
-        print_r( $snapSectionDynamic );
-        print_r( '</pre>' );
-
+        
 
         wp_localize_script( 'cwss-js', 'cwssData', 
             array( 
                 'homeUrl'    => home_url(),
                 'currentUrl' => get_the_permalink(),
-                'iconSVG'    => $snapSectionDynamic['icon'],
+                'iconSVG'    => Options::getOption( 'icon' ),
                 'pluginURL'  => plugin_dir_url( __FILE__ ),
-                'iconSize'   => $snapSectionDynamic['size']
+                'iconSize'   => Options::getOption( 'size' )
             ) 
         );
     }
@@ -72,6 +66,7 @@ class PluginInit {
         // Adicione o estilo de seleção de cores
         wp_enqueue_style( 'wp-color-picker' );
 
+        wp_enqueue_style( 'cwss-admin-css', CSS_URL . 'style-admin.min.css', array(), PLUGIN_VERSION );
     }
 
 }

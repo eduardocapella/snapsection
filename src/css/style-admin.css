@@ -1,0 +1,38 @@
+:root {
+    --border-color: #e1e1e1;
+}
+
+.cwss-row {
+    display: flex;
+    gap: 1.6rem;
+}
+
+.cwss-col {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: .3rem;
+}
+
+.cwss-col label {
+    padding: .75rem;
+    border: 2px solid var(--border-color);
+    background: white;
+    display: flex;
+    width: 1.4rem;
+    height: 1.4rem;
+    text-align: center;
+    line-height: 1rem;
+    border-radius: .6rem;
+}
+
+
+.mw-620 {
+    max-width: 38.75rem;
+}
+
+.cwss-col input:checked + label {
+    border-color: #3582c4;
+}
+
+

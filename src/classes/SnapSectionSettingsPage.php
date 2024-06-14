@@ -2,6 +2,9 @@
 
 namespace Cwss\Classes;
 
+// static no options pra não precisar ir no banco de dados de novo
+// instanciar a classe options na classe principal
+
 class SnapSectionSettingsPage {
     public $plugin;
 
@@ -62,8 +65,8 @@ class SnapSectionSettingsPage {
         ?>
         <div class="wrap">
             <h2><?php echo __( 'SnapSection Settings', 'snap-section' ); ?></h2>
-            <p><?php echo __( 'The plugin that makes it easier to share a section of your page, article or blog post.', 'snap-section' ); ?>
-            </p>
+            <p class="mw-620"><?php echo __( 'The plugin that makes it easier to share a section of your page, article or blog post.', 'snap-section' ); ?></p>
+            <p class="mw-620"><?php echo __( 'SnapSection scans every &lt;h3&gt; (third-level heading) element across your website\'s pages and posts, and creates a button that allows your audience to copy a URL that points to this &lt;h3&gt;.', 'snap-section' ); ?></p>
             <hr>
             <form method="POST" action="options.php">
                 <?php
@@ -152,12 +155,9 @@ class SnapSectionSettingsPage {
 
     }
 
-    public function field_color_callback( $arguments ) {
-        // Obtenha o valor da configuração que registramos com register_setting()
-        $snapSectionDynamic = get_option( 'snapsection_dynamic' );
-        if ( !isset( $snapSectionDynamic[ 'color' ] ) ) {
-            $snapSectionDynamic[ 'color' ] = '#0099FF';
-        } ?>
+    // criar essa Classe options pra criar um array com os valores de cada propriedade e pra armazenar as propriedades já "settadas"
+
+    public function field_color_callback( $arguments ) { ?>
         
         <?php // Saída do campo ?>
         <input
@@ -165,7 +165,7 @@ class SnapSectionSettingsPage {
             name="snapsection_dynamic[color]"
             id="snapsection_dynamic_color"
             type="text"
-            value="<?php echo $snapSectionDynamic[ 'color' ] ?>"
+            value="<?php echo Options::getOption( 'color' ) ?? '#0099FF' ?>"
         />
 
         <?php // Adicione o script para inicializar o seletor de cores ?>
@@ -181,11 +181,7 @@ class SnapSectionSettingsPage {
 
     <?php }
 
-    public function field_icon_size_callback( $arguments ) {
-        $snapSectionDynamic = get_option( 'snapsection_dynamic' );
-        if ( !isset( $snapSectionDynamic[ 'size' ] ) ) {
-            $snapSectionDynamic[ 'size' ] = 1;
-        } ?>
+    public function field_icon_size_callback( $arguments ) { ?>
 
         <input
             name="snapsection_dynamic[size]"
@@ -194,7 +190,7 @@ class SnapSectionSettingsPage {
             min="0.5"
             max="1"
             step="0.1"
-            value="<?php echo $snapSectionDynamic[ 'size' ] ?>" 
+            value="<?php echo Options::getOption( 'size' ) ?? '1' ?>" 
         />
         
         <p class="cwss-field-description">
@@ -203,40 +199,23 @@ class SnapSectionSettingsPage {
     <?php }
 
 
-    public function field_top_position_callback( $arguments ) {
-        $snapSectionDynamic = get_option( 'snapsection_dynamic' );
-
-        if (!isset($snapSectionDynamic[ 'top' ])) {
-            $snapSectionDynamic[ 'top' ] = 10;
-        } ?>
+    public function field_top_position_callback( $arguments ) { ?>
 
         <input
             id="snapsection_dynamic_top"
             name="snapsection_dynamic[top]"
             type="number"
-            value="<?php echo $snapSectionDynamic[ 'top' ] ?>"
+            value="<?php echo Options::getOption( 'top' ) ?? '10' ?>"
         />
         
         <p class="cwss-field-description">
-            <?php esc_html_e( 'Adjust the top position. Values in pixels.', 'snap-section' ); ?>
+            <?php esc_html_e( 'Values in pixels. Depending on your <h3> font, you\'ll need to adjust the top position.', 'snap-section' ); ?>
         </p>
 
     <?php }
 
 
     public function snapsection_icon_image( $arguments ) {
-        // Obtenha o valor da configuração que registramos com register_setting()
-        // $value = get_option($arguments[ 'label_for' ], 'option1');
-        
-        if (false === get_option( 'snapsection_dynamic' ) ) {
-            // A opção não existe, então a adiciona com um valor inicial padrão (array vazio)
-            add_option( 'snapsection_dynamic', array() );
-        }
-        $snapSectionDynamic = get_option( 'snapsection_dynamic' );
-
-        if ( !isset( $snapSectionDynamic[ 'icon' ] ) ) {
-            $snapSectionDynamic[ 'icon' ] = 'option1';
-        }
 
         // Opções para o campo de botões de opção
         $iconsAvailable = array(
@@ -246,27 +225,31 @@ class SnapSectionSettingsPage {
         );
         // textos passíveis de tradução nunca são salvos no banco de dados
         // não salvar caminhos / paths no banco de dados
-        foreach( $iconsAvailable as $iconValue => $iconPath ) { ?>
-            <input
-                id='snapsection_dynamic_icon'
-                type='radio'
-                name='snapsection_dynamic[icon]'
-                value='<?php echo $iconValue ?>'
-                <?php checked( $snapSectionDynamic[ 'icon' ], $iconValue ) ?>
-            >
-
-            <label for="snapsection_dynamic_icon">
-                <img 
-                    width=22
-                    height=22
-                    src="<?php echo PLUGIN_URL . $iconPath ?>"
-                >
-            </label>
-        <?php } ?>
-
-        <?php
-       
-    }
+        ?>
+        <div class="cwss-row">
+            <?php $i = 0; ?>
+            <?php foreach( $iconsAvailable as $iconValue => $iconPath ) { ?>
+                <div class="cwss-col">
+                    <input
+                        id='snapsection_dynamic_icon<?php echo $i ?>'
+                        type='radio'
+                        name='snapsection_dynamic[icon]'
+                        value='<?php echo $iconValue ?>'
+                        <?php checked( Options::getOption( 'icon' ) ?? 'option1', $iconValue ) ?>
+                    >
+                    <label for="snapsection_dynamic_icon<?php echo $i ?>">
+                        <img
+                            width=22
+                            height=22
+                            src="<?php echo PLUGIN_URL . $iconPath ?>"
+                        >
+                    </label>
+                </div>
+                <?php $i++; ?>
+            <?php } ?>
+        </div>
+        
+    <?php }
 
     function snapsection_sanitize_options( $input ) {
         $new_input = array();

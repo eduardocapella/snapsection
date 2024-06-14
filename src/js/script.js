@@ -95,6 +95,7 @@ jQuery(document).ready(function ($) {
 		// when the button is clicked, copy the URL to the clipboard
 		button.addEventListener('click', function () {
 			navigator.clipboard.writeText(copyText);
+			
 			console.log('Copied: ' + copyText);
 		});
 	});
@@ -126,6 +127,7 @@ jQuery(document).ready(function ($) {
 			}
 		}
 	}
+
 
 	function slugify($stringToSlugify) {
 		$title_slugfied = $stringToSlugify.toLowerCase();
