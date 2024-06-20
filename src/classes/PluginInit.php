@@ -4,16 +4,19 @@ namespace Cwss\Classes;
 class PluginInit {
 
     public $settings = null;
+    public $options = null;
 
     function __construct() {
-        // cria uma instância da classe SnapSectionSettingsPage
-        // garanto que todas as Classes sejam instanciadas apenas uma vez
-        // e posso chamar a classe SnapSectionSettingsPage() chamando a função cwss()
+
         $this->settings = new SnapSectionSettingsPage();
+
+        $this->options = new Options();
 
         add_action( 'wp_enqueue_scripts', array( $this, 'cwss_enqueue_styles' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'cwss_enqueue_scripts' ) );
+
+        add_action( 'wp_head', array( $this, 'addCssVars' ) );
 
     }
 
@@ -22,8 +25,18 @@ class PluginInit {
         if( is_admin() || is_archive() || is_search() ) {
             return;
         }
-        wp_enqueue_style( 'cwss-css', CSS_URL . 'style.min.css', array(), PLUGIN_VERSION );
+        wp_enqueue_style( 'cwss-css', CWSS_CSS_URL . 'style.min.css', array(), CWSS_PLUGIN_VERSION );
+
     }
+
+    function addCssVars() { ?>
+        <style>
+            :root {
+                --cwss-icon-color: <?php echo esc_html( cwss()->options->getOption( 'color' ) ) ?? '#0099FF' ?> !important;
+            }
+        </style>
+        <!-- Snap Section CSS -->
+    <?php }
 
     // enqueue SnapSection scripts
     function cwss_enqueue_scripts() {
@@ -31,27 +44,20 @@ class PluginInit {
             return;
         }
 
-        wp_enqueue_script( 'cwss-js', JS_URL . 'script.min.js', array( 'jquery' ), PLUGIN_VERSION, 'true' );
+        wp_enqueue_script( 'cwss-js', CWSS_JS_URL . 'script.min.js', array( 'jquery' ), CWSS_PLUGIN_VERSION, 'true' );
         
 
         wp_localize_script( 'cwss-js', 'cwssData', 
             array( 
                 'homeUrl'    => home_url(),
                 'currentUrl' => get_the_permalink(),
-                'iconSVG'    => Options::getOption( 'icon' ),
+                'iconSVG'    => cwss()->options->getOption( 'icon' ) ?? 'option1',
                 'pluginURL'  => plugin_dir_url( __FILE__ ),
-                'iconSize'   => Options::getOption( 'size' )
+                'iconSize'   => cwss()->options->getOption( 'size' ) ?? '.7',
+                'iconText'   => cwss()->options->getOption( 'text' ) ?? 'Copied!'
             ) 
         );
     }
-
-    // get_option( string $option, mixed $default_value = false ): mixed
-    // o 1º parâmetro é obrigatório pois ele não tem um valor atribuído
-    // o 2º parâmetro tem o valor false atribuído, por isso ele não é obrigatório. Caso não passem esse parâmetro, ele vai assumir o valor false
-    // mixed recebe qualquer tipo de dado. 
-    // : o que vem depois dos parênteses representa o que a função retorna
-    // :mixed retorna um tipo qualquer de dado
-
 
     function enqueue_admin_scripts( $hook ) {
         
@@ -66,7 +72,7 @@ class PluginInit {
         // Adicione o estilo de seleção de cores
         wp_enqueue_style( 'wp-color-picker' );
 
-        wp_enqueue_style( 'cwss-admin-css', CSS_URL . 'style-admin.min.css', array(), PLUGIN_VERSION );
+        wp_enqueue_style( 'cwss-admin-css', CWSS_CSS_URL . 'style-admin.min.css', array(), CWSS_PLUGIN_VERSION );
     }
 
 }
