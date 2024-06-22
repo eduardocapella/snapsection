@@ -40,12 +40,13 @@ h3.cwss-h3 {
     transform: translate(0, -50%);
 }
 
-.cwss-h3-link-icon:hover {
-    background-color: transparent;
+.cwss-h3-link-icon svg {
+    display: block;
 }
 
 .cwss-h3-link-icon:hover {
     /* transform: translate(0, -50%) rotate(5deg); */
+    background-color: transparent;
     opacity: 0.8;
     transition: all .2s ease-in-out;
 }
@@ -73,7 +74,7 @@ h3 .cwss-h3-link-icon {
     display: none;
 }
 
-h3:hover .cwss-h3-link-icon {
+h3 .cwss-h3-wrapper:hover .cwss-h3-link-icon {
     display: block;
 }
 

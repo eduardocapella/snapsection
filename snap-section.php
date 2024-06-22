@@ -38,7 +38,7 @@ if( file_exists( $autoload_file ) ) {
 function cwss() {
     static $instance = null;
     if ( is_null( $instance ) ) {
-        $instance = new Cwss\Classes\PluginInit();
+        $instance = new \Cwss\Classes\PluginInit();
     }
     return $instance;
 }

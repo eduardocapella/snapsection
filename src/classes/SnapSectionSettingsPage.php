@@ -134,8 +134,9 @@ class SnapSectionSettingsPage {
             name="snapsection_dynamic[color]"
             id="snapsection_dynamic_color"
             type="text"
-            value="<?php echo esc_html( cwss()->options->getOption( 'color' ) ) ?? '#0099FF' ?>"
+            value="<?php echo esc_html( cwss()->options->getOption( 'color' ) ?? '#0099FF' ) ?>"
         />
+
 
         <?php // Adicione o script para inicializar o seletor de cores ?>
         <script type="text/javascript">
@@ -159,7 +160,7 @@ class SnapSectionSettingsPage {
             min="0.5"
             max="1"
             step="0.1"
-            value="<?php echo esc_html( cwss()->options->getOption( 'size' ) ) ?? '1' ?>" 
+            value="<?php echo esc_html( cwss()->options->getOption( 'size' ) ?? '1' ) ?>" 
         />
         
         <p class="cwss-field-description">
@@ -187,7 +188,7 @@ class SnapSectionSettingsPage {
                         type='radio'
                         name='snapsection_dynamic[icon]'
                         value='<?php echo esc_html( $iconValue ) ?>'
-                        <?php checked( esc_html( cwss()->options->getOption( 'icon' ) ) ?? 'option1', esc_html( $iconValue ) ) ?>
+                        <?php checked( esc_html( cwss()->options->getOption( 'icon' ) ?? 'option1' ), esc_html( $iconValue ) ) ?>
                     >
                     <label for="snapsection_dynamic_icon<?php echo esc_html( $i ) ?>">
                         <img

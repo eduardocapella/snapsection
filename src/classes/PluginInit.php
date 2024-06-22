@@ -32,7 +32,7 @@ class PluginInit {
     function addCssVars() { ?>
         <style>
             :root {
-                --cwss-icon-color: <?php echo esc_html( cwss()->options->getOption( 'color' ) ) ?? '#0099FF' ?> !important;
+                --cwss-icon-color: <?php echo esc_html( cwss()->options->getOption( 'color' ) ?? '#0099FF' ) ?> !important;
             }
         </style>
         <!-- Snap Section CSS -->
