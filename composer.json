@@ -2,13 +2,10 @@
     "name": "capella/plugins",
     "description": "SnapSection is a WordPress plugin that allows you to share a section of your article quickly.",
     "type": "project",
-    "require-dev": {
-        "wp-coding-standards/wpcs": "^3.1"
-    },
     "license": "GPL-3.0 license",
     "autoload": {
         "psr-4": {
-            "Cwss\\": "src/"
+            "Cwss\\": "includes/"
         }
     },
     "authors": [

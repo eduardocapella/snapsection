@@ -1,4 +1,7 @@
 /node_modules/
 .DS_Store
+__MACOSX/\*
 .vscode/
 snap-section.zip
+/vendor/
+/dist/

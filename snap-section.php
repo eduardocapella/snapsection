@@ -1,7 +1,7 @@
 <?php
 /*
- * Plugin Name:       Snap Section
- * Plugin URI:        https://capellaweb.com.br/plugins/snap-section/
+ * Plugin Name:       SnapSection
+ * Plugin URI:        https://www.snapsection.com
  * Description:       SnapSection allows users to swift share specific sections from your article or blog post.
  * Version:           1.0.0
  * Requires at least: 5.2
@@ -25,8 +25,8 @@ define ( 'CWSS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define ( 'CWSS_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define ( 'CWSS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-define ( 'CWSS_CSS_URL', CWSS_PLUGIN_URL . 'src/css/'  );
-define ( 'CWSS_JS_URL', CWSS_PLUGIN_URL . 'src/js/' );
+define ( 'CWSS_CSS_URL', CWSS_PLUGIN_URL . 'dist/css/'  );
+define ( 'CWSS_JS_URL', CWSS_PLUGIN_URL . 'dist/js/' );
 
 
 // Include Composer's Autoloader if file exist
@@ -35,12 +35,17 @@ if( file_exists( $autoload_file ) ) {
     require_once $autoload_file;
 }
 
-function cwss() {
+/**
+* Creates a Container for the Class PluginInit
+*
+* @since 1.0.0
+* @return instance of PluginInit
+*/
+function snapSection() {
     static $instance = null;
     if ( is_null( $instance ) ) {
         $instance = new \Cwss\Classes\PluginInit();
     }
     return $instance;
 }
-
-cwss();
+snapSection();

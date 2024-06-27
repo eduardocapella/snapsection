@@ -1,0 +1,108 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SnapSection\n"
+"POT-Creation-Date: 2024-06-23 11:53-0300\n"
+"PO-Revision-Date: 2024-06-23 11:53-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: snap-section.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: node_modules\n"
+"X-Poedit-SearchPathExcluded-2: vendor\n"
+
+#: src/Classes/PluginInit.php:67
+msgid "Copied!"
+msgstr "Copiado!"
+
+#: src/Classes/SnapSectionSettingsPage.php:22
+msgid "Settings"
+msgstr "Configurações"
+
+#: src/Classes/SnapSectionSettingsPage.php:51
+msgid "Settings Saved"
+msgstr "Configurações Salvas"
+
+#: src/Classes/SnapSectionSettingsPage.php:61
+msgid "SnapSection Settings"
+msgstr "Configurações do SnapSection"
+
+#: src/Classes/SnapSectionSettingsPage.php:62
+msgid ""
+"The plugin that makes it easier to share a section of your page, article or "
+"blog post."
+msgstr ""
+"O plugin que torna fácil o compartilhamento de uma seção de sua página, "
+"artigo ou post de um blog."
+
+#: src/Classes/SnapSectionSettingsPage.php:63
+msgid ""
+"SnapSection scans every &lt;h3&gt; (third-level heading) element across your "
+"website's pages and posts, and creates a button that allows your audience to "
+"copy a URL that points to this &lt;h3&gt;."
+msgstr ""
+"SnapSection busca todos as tags &lt;h3&gt; (cabeçalho de nível 3) nas "
+"páginas ou posts de seu site, e cria um botão que permite à sua audiência "
+"copiar a URL apontando para esse &lt;h3&gt;."
+
+#: src/Classes/SnapSectionSettingsPage.php:69
+msgid "Save Settings"
+msgstr "Salvar Configurações"
+
+#: src/Classes/SnapSectionSettingsPage.php:80
+msgid "Customize SnapSection"
+msgstr "Customizar SnapSection"
+
+#: src/Classes/SnapSectionSettingsPage.php:92
+msgid "Icon"
+msgstr "Ícone"
+
+#: src/Classes/SnapSectionSettingsPage.php:103
+msgid "Icon Color"
+msgstr "Cor do ícone"
+
+#: src/Classes/SnapSectionSettingsPage.php:114
+msgid "Icon Size"
+msgstr "Tamanho do ícone"
+
+#: src/Classes/SnapSectionSettingsPage.php:162
+msgid "Fine adjustment of your icon size. From 0.5 to 1, 50-100%."
+msgstr "Ajuste fino para o tamanho do ícone. De 0.5 a 1, 50-100%."
+
+#. Plugin Name of the plugin/theme
+msgid "SnapSection"
+msgstr "SnapSection"
+
+#. Plugin URI of the plugin/theme
+msgid "https://www.snapsection.com"
+msgstr "https://www.snapsection.com"
+
+#. Description of the plugin/theme
+msgid ""
+"SnapSection allows users to swift share specific sections from your article "
+"or blog post."
+msgstr ""
+"SnapSection permite que seus usuários rapidamente compartilhem uma seção "
+"específica de seu artigo ou post."
+
+#. Author of the plugin/theme
+msgid "Eduardo Capella"
+msgstr "Eduardo Capella"
+
+#. Author URI of the plugin/theme
+msgid "https://capellaweb.com.br"
+msgstr "https://capellaweb.com.br"
+
+#~ msgid "https://capellaweb.com.br/plugins/snap-section/"
+#~ msgstr "https://capellaweb.com.br/plugins/snap-section/"

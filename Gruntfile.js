@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         uglify: {
             build: {
                 src: 'src/js/script.js',
-                dest: 'src/js/script.min.js'
+                dest: 'dist/js/script.min.js'
             },
         },
 
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: 'src/css',
                     src: ['*.css', '!*.min.css'],
-                    dest: 'src/css',
+                    dest: 'dist/css',
                     ext: '.min.css'
                 }]
             }
