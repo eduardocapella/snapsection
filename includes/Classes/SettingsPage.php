@@ -31,7 +31,7 @@ class SettingsPage {
     public function settings_link( $links ) {
         $url = admin_url( 'options-general.php?page=snapsection' );
         
-        $settings_link = '<a href="'. $url .'">' . esc_html__( 'Settings', 'snap-section' ) . '</a>';
+        $settings_link = '<a href="'. $url .'">' . esc_html__( 'Settings', 'snapsection' ) . '</a>';
         array_push( $links, $settings_link );
 
         return $links;
@@ -66,15 +66,15 @@ class SettingsPage {
         } ?>
 
         <div class="wrap">
-            <h2><?php echo esc_html__( 'SnapSection Settings', 'snap-section' ); ?></h2>
-            <p class="mw-620"><?php echo esc_html__( 'The plugin that makes it easier to share a section of your page, article or blog post.', 'snap-section' ); ?></p>
-            <p class="mw-620"><?php echo esc_html__( 'SnapSection scans every &lt;h3&gt; (third-level heading) element across your website\'s pages and posts, and creates a button that allows your audience to copy a URL that points to this &lt;h3&gt;.', 'snap-section' ); ?></p>
+            <h2><?php echo esc_html__( 'SnapSection Settings', 'snapsection' ); ?></h2>
+            <p class="mw-620"><?php echo esc_html__( 'The plugin that makes it easier to share a section of your page, article or blog post.', 'snapsection' ); ?></p>
+            <p class="mw-620"><?php echo esc_html__( 'SnapSection scans every &lt;h3&gt; (third-level heading) element across your website\'s pages and posts, and creates a button that allows your audience to copy a URL that points to this &lt;h3&gt;.', 'snapsection' ); ?></p>
             <hr>
             <form method="POST" action="options.php">
                 <?php
                 settings_fields( 'snapsection_fields' );
                 do_settings_sections( 'snapsection' );
-                submit_button( esc_html__( 'Save Settings', 'snap-section' ) );
+                submit_button( esc_html__( 'Save Settings', 'snapsection' ) );
                 ?>
             </form>
         </div>
@@ -91,7 +91,7 @@ class SettingsPage {
     public function setup_sections() {
         add_settings_section(
             'snapsection_section',
-            esc_html__( 'Customize SnapSection','snap-section' ),
+            esc_html__( 'Customize SnapSection','snapsection' ),
             false,
             'snapsection'
         );
@@ -115,7 +115,7 @@ class SettingsPage {
          */
         add_settings_field(
             'snapsection_icon_image',
-            esc_html__( 'Icon', 'snap-section' ),
+            esc_html__( 'Icon', 'snapsection' ),
             array( $this, 'snapsection_icon_image' ),
             'snapsection',
             'snapsection_section',
@@ -129,7 +129,7 @@ class SettingsPage {
          */
         add_settings_field(
             'snapsection_icon_color',
-            esc_html__( 'Icon Color', 'snap-section' ),
+            esc_html__( 'Icon Color', 'snapsection' ),
             array( $this, 'field_color_callback' ),
             'snapsection',
             'snapsection_section',
@@ -143,7 +143,7 @@ class SettingsPage {
          */
         add_settings_field(
             'snapsection_icon_size',
-            esc_html__( 'Icon Size', 'snap-section' ),
+            esc_html__( 'Icon Size', 'snapsection' ),
             array( $this, 'field_icon_size_callback' ),
             'snapsection',
             'snapsection_section',
@@ -169,21 +169,6 @@ class SettingsPage {
             type="text"
             value="<?php echo esc_html( snapSection()->options->getOption( 'color' ) ?? '#0099FF' ) ?>"
         />
-
-        <?php 
-        /**
-         * Starts the script for the color picker
-         */
-        ?>
-        <script type="text/javascript">
-            jQuery(document).ready(function($) {
-                $(".color-picker").wpColorPicker({
-                    change: function(event, ui) {
-                        $("#" + event.target.id + "_code").val(ui.color.toString());
-                    }
-                });
-            });
-        </script>
     <?php }
 
     /**
@@ -204,7 +189,7 @@ class SettingsPage {
         />
         
         <p class="cwss-field-description">
-            <?php esc_html_e( 'Fine adjustment of your icon size. From 0.5 to 1, 50-100%.', 'snap-section' ); ?>
+            <?php esc_html_e( 'Fine adjustment of your icon size. From 0.5 to 1, 50-100%.', 'snapsection' ); ?>
         </p>
     <?php }
 

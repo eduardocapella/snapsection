@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SnapSection\n"
-"POT-Creation-Date: 2024-06-23 11:53-0300\n"
-"PO-Revision-Date: 2024-06-23 11:53-0300\n"
+"POT-Creation-Date: 2024-08-19 13:35-0300\n"
+"PO-Revision-Date: 2024-08-19 13:35-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -12,7 +12,7 @@ msgstr ""
 "X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
-"X-Poedit-WPHeader: snap-section.php\n"
+"X-Poedit-WPHeader: snapsection.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
@@ -22,23 +22,19 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 "X-Poedit-SearchPathExcluded-2: vendor\n"
 
-#: src/Classes/PluginInit.php:67
+#: includes/Classes/PluginInit.php:79
 msgid "Copied!"
 msgstr "Copiado!"
 
-#: src/Classes/SnapSectionSettingsPage.php:22
+#: includes/Classes/SettingsPage.php:34
 msgid "Settings"
 msgstr "Configurações"
 
-#: src/Classes/SnapSectionSettingsPage.php:51
-msgid "Settings Saved"
-msgstr "Configurações Salvas"
-
-#: src/Classes/SnapSectionSettingsPage.php:61
+#: includes/Classes/SettingsPage.php:69
 msgid "SnapSection Settings"
 msgstr "Configurações do SnapSection"
 
-#: src/Classes/SnapSectionSettingsPage.php:62
+#: includes/Classes/SettingsPage.php:70
 msgid ""
 "The plugin that makes it easier to share a section of your page, article or "
 "blog post."
@@ -46,7 +42,7 @@ msgstr ""
 "O plugin que torna fácil o compartilhamento de uma seção de sua página, "
 "artigo ou post de um blog."
 
-#: src/Classes/SnapSectionSettingsPage.php:63
+#: includes/Classes/SettingsPage.php:71
 msgid ""
 "SnapSection scans every &lt;h3&gt; (third-level heading) element across your "
 "website's pages and posts, and creates a button that allows your audience to "
@@ -56,27 +52,27 @@ msgstr ""
 "páginas ou posts de seu site, e cria um botão que permite à sua audiência "
 "copiar a URL apontando para esse &lt;h3&gt;."
 
-#: src/Classes/SnapSectionSettingsPage.php:69
+#: includes/Classes/SettingsPage.php:77
 msgid "Save Settings"
 msgstr "Salvar Configurações"
 
-#: src/Classes/SnapSectionSettingsPage.php:80
+#: includes/Classes/SettingsPage.php:94
 msgid "Customize SnapSection"
 msgstr "Customizar SnapSection"
 
-#: src/Classes/SnapSectionSettingsPage.php:92
+#: includes/Classes/SettingsPage.php:118
 msgid "Icon"
 msgstr "Ícone"
 
-#: src/Classes/SnapSectionSettingsPage.php:103
+#: includes/Classes/SettingsPage.php:132
 msgid "Icon Color"
 msgstr "Cor do ícone"
 
-#: src/Classes/SnapSectionSettingsPage.php:114
+#: includes/Classes/SettingsPage.php:146
 msgid "Icon Size"
 msgstr "Tamanho do ícone"
 
-#: src/Classes/SnapSectionSettingsPage.php:162
+#: includes/Classes/SettingsPage.php:192
 msgid "Fine adjustment of your icon size. From 0.5 to 1, 50-100%."
 msgstr "Ajuste fino para o tamanho do ícone. De 0.5 a 1, 50-100%."
 
@@ -104,5 +100,8 @@ msgstr "Eduardo Capella"
 msgid "https://capellaweb.com.br"
 msgstr "https://capellaweb.com.br"
 
-#~ msgid "https://capellaweb.com.br/plugins/snap-section/"
-#~ msgstr "https://capellaweb.com.br/plugins/snap-section/"
+#~ msgid "Settings Saved"
+#~ msgstr "Configurações Salvas"
+
+#~ msgid "https://capellaweb.com.br/plugins/snapsection/"
+#~ msgstr "https://capellaweb.com.br/plugins/snapsection/"

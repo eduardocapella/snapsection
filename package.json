@@ -1,5 +1,5 @@
 {
-  "name": "snap-section",
+  "name": "snapsection",
   "version": "1.0.0",
   "description": "Using Grunt in this project to minify JS and CSS files.",
   "main": "Gruntfile.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eduardocapella/snap-section.git"
+    "url": "git+https://github.com/eduardocapella/snapsection.git"
   },
   "keywords": [
     "SnapSection",
@@ -20,9 +20,9 @@
   "author": "Eduardo Capella",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/eduardocapella/snap-section/issues"
+    "url": "https://github.com/eduardocapella/snapsection/issues"
   },
-  "homepage": "https://github.com/eduardocapella/snap-section#readme",
+  "homepage": "https://github.com/eduardocapella/snapsection#readme",
   "devDependencies": {
     "grunt": "^1.6.1",
     "grunt-contrib-cssmin": "^5.0.0",

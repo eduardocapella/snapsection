@@ -10,7 +10,7 @@
  * Author URI:        https://capellaweb.com.br
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       snap-section
+ * Text Domain:       snapsection
  * Domain Path:       /languages
  * Requires Plugins:  
  */

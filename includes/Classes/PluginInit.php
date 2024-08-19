@@ -29,8 +29,6 @@ class PluginInit {
 
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'cwss_enqueue_scripts' ) );
-
-        add_action( 'wp_head', array( $this, 'add_css_vars' ) );
     }
 
     /**
@@ -39,23 +37,8 @@ class PluginInit {
      * @return void
      */
     public function cwss_load_textdomain() {
-        load_plugin_textdomain( 'snap-section', false, dirname( CWSS_PLUGIN_BASENAME ) . '/languages' );
+        load_plugin_textdomain( 'snapsection', false, dirname( CWSS_PLUGIN_BASENAME ) . '/languages' );
     }
-
-    /**
-     * Add CSS variables to the head of the document
-     * 
-     * @since 1.0.0
-     * 
-     * @return void
-     */
-    public function add_css_vars() { ?>
-        <style>
-            :root {
-                --cwss-icon-color: <?php echo esc_html( snapSection()->options->getOption( 'color' ) ?? '#0099FF' ) ?> !important;
-            }
-        </style>
-    <?php }
 
     // enqueue SnapSection scripts
     public function cwss_enqueue_scripts() {
@@ -65,6 +48,23 @@ class PluginInit {
         // Styles
         wp_enqueue_style( 'cwss-css', CWSS_CSS_URL . 'style.min.css', array(), CWSS_PLUGIN_VERSION );
 
+        // Register the cwss-icon-color style
+        wp_register_style( 'cwss-icon-color', false, [], CWSS_PLUGIN_VERSION );
+
+        // Set the CSS variable
+        $root_css_vars = "
+            :root {
+                --cwss-icon-color: " . esc_html( snapSection()->options->getOption( 'color' ) ?? '#0099FF' ) . " !important;
+            }
+        ";
+
+        // Add the inline CSS to the registered style
+        wp_add_inline_style( 'cwss-icon-color', $root_css_vars );
+
+        // Enqueue the style
+        wp_enqueue_style( 'cwss-icon-color' );
+
+        
         // Scripts
         wp_enqueue_script( 'cwss-js', CWSS_JS_URL . 'script.min.js', array( 'jquery' ), CWSS_PLUGIN_VERSION, 'true' );
         
@@ -86,11 +86,17 @@ class PluginInit {
             return;
         }
 
-        // WordPress Color Picker library script
-        wp_enqueue_script( 'wp-color-picker' );
-
         // WordPress Color Picker library style
         wp_enqueue_style( 'wp-color-picker' );
+        
+        // WordPress Color Picker library script
+        wp_enqueue_script(
+            'cwss-color-picker',
+            CWSS_JS_URL . 'color-picker-script.min.js',
+            array( 'wp-color-picker' ),
+            CWSS_PLUGIN_VERSION,
+            true
+        );
 
         // SnapSection Admin CSS
         wp_enqueue_style( 'cwss-admin-css', CWSS_CSS_URL . 'style-admin.min.css', array(), CWSS_PLUGIN_VERSION );
