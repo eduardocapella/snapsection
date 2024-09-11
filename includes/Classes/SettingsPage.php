@@ -15,9 +15,9 @@ class SettingsPage {
     public function __construct() {
         $this->plugin = plugin_basename( CWSS_PLUGIN_BASENAME );
 
-        add_action( 'admin_menu', array( $this, 'create_settings_page' ));
-        add_action( 'admin_init', array( $this, 'setup_sections' ));
-        add_action( 'admin_init', array( $this, 'setup_fields' ));
+        add_action( 'admin_menu', array( $this, 'create_settings_page' ) );
+        add_action( 'admin_init', array( $this, 'setup_sections' ) );
+        add_action( 'admin_init', array( $this, 'setup_fields' ) );
         
         add_filter( "plugin_action_links_$this->plugin", array( $this, 'settings_link' ) );
     }
@@ -25,7 +25,7 @@ class SettingsPage {
     /**
      * Create the settings link for the plugin in the plugins list
      *
-     * @param [array] $links
+     * @param array $links
      * @return void
      */
     public function settings_link( $links ) {
@@ -68,7 +68,7 @@ class SettingsPage {
         <div class="wrap">
             <h2><?php echo esc_html__( 'SnapSection Settings', 'snapsection' ); ?></h2>
             <p class="mw-620"><?php echo esc_html__( 'The plugin that makes it easier to share a section of your page, article or blog post.', 'snapsection' ); ?></p>
-            <p class="mw-620"><?php echo esc_html__( 'SnapSection scans every &lt;h3&gt; (third-level heading) element across your website\'s pages and posts, and creates a button that allows your audience to copy a URL that points to this &lt;h3&gt;.', 'snapsection' ); ?></p>
+            <p class="mw-620"><?php echo esc_html__( 'SnapSection scans every SnapSection Element ( &lt;h2&gt; - second-level heading - by default) across your website\'s content, and creates a button that allows your audience to copy a URL that points to this element.', 'snapsection' ); ?></p>
             <hr>
             <form method="POST" action="options.php">
                 <?php
@@ -108,6 +108,34 @@ class SettingsPage {
             'snapsection_fields',
             'snapsection_dynamic',
             'snapsection_sanitize_options'
+        );
+
+        /**
+         * Choose where SnapSection will appear
+         */
+        add_settings_field(
+            'snapsection_where',
+            esc_html__( 'Where', 'snapsection' ),
+            array( $this, 'field_where_callback' ),
+            'snapsection',
+            'snapsection_section',
+            $arguments = array(
+                'label_for' => 'snapsection_where'
+            )
+        );
+
+        /**
+         * Choose the element to have IDs created
+         */
+        add_settings_field(
+            'snapsection_element',
+            esc_html__( 'Element', 'snapsection' ),
+            array( $this, 'field_element_callback' ),
+            'snapsection',
+            'snapsection_section',
+            $arguments = array(
+                'label_for' => 'snapsection_element'
+            )
         );
 
         /**
@@ -155,10 +183,123 @@ class SettingsPage {
     }
 
     /**
+     * Creates the Where field, so that users can should where SnapSection will appear
+     *
+     * @since 1.0.0
+     * 
+     * @param array $arguments
+     * @return void
+     */
+    public function field_where_callback( $arguments ) {
+        $args = array(
+            'public'   => true,
+            // '_builtin' => false
+        );
+
+        $post_types = get_post_types( $args, 'objects', 'and' );
+
+        $post_types[ 'archive' ] = (object) array(
+            'label' => 'Archives',
+            'name'  => 'archive'
+        );
+
+        $post_types[ 'front_page' ] = (object) array(
+            'label' => 'Front Page',
+            'name'  => 'front_page'
+        );
+
+        // Get Where options
+        $saved_options = snapSection()->options->getOption( 'where' );
+
+        // If no options, set 'post' as default
+        if ( empty( $saved_options ) ) {
+            $saved_options = array( 'post' );
+        }
+
+        ?>
+        <div class="cwss-row">
+            <?php foreach( $post_types as $post_type ) {
+
+                if( in_array( 
+                    $post_type->label,
+                    array( 'Attachment', 'elementor_library', 'Media' ) ) 
+                ) {
+                    continue;
+                } 
+                ?>
+                <div class="cwss-col">
+                    <input
+                        type="checkbox"
+                        name="snapsection_dynamic[where][]"
+                        value="<?php echo esc_attr( $post_type->name ); ?>"
+                        <?php checked( in_array( $post_type->name, $saved_options ) ); ?>
+                        id="snapsection_dynamic_where_<?php echo $post_type->name ?>"
+                    />
+
+                    <label 
+                        for="snapsection_dynamic_where_<?php echo $post_type->name ?>">
+                            <?php echo esc_html_e( $post_type->label, 'snapsection' ) ?>
+                    </label>
+                </div>
+                <?php
+            } ?>
+        </div>
+    <?php }
+
+    /**
+     * Creates the Element field, so users can choose the element to have IDs created
+     *
+     * @since 1.1.0
+     * 
+     * @param array $arguments 
+     * @return void
+     */
+    public function field_element_callback( $arguments ) { ?>
+        <?php 
+        $elementsAvailable = array(
+            'option1' => '&lt;h1&gt;',
+            'option2' => '&lt;h2&gt;',
+            'option3' => '&lt;h3&gt;',
+            'option4' => '&lt;h4&gt;',
+            'option5' => '.cwss-element'
+        );
+        // Recupera o valor armazenado
+        $selectedOption = esc_html( snapSection()->options->getOption( 'element' ) ?? '&lt;h2&gt;' );
+        ?>
+        <select
+            class="element"
+            name="snapsection_dynamic[element]"
+            id="snapsection_dynamic_element">
+        >
+            <?php
+                foreach ( $elementsAvailable as $elementOption => $element  ) { ?>
+                    <option 
+                        value="<?php echo esc_attr( $element ); ?>"
+                        <?php selected( $selectedOption, $element ); ?>
+                    >
+                        <?php echo esc_html( $element ); ?>
+                    </option>
+                <?php }
+            ?>
+        </select>
+
+        <p class="cwss-field-description">
+            <?php echo wp_kses( 
+                __( 'Please select the element you\'d like to have a SnapSection icon.<br>Options available are h1, h2, h3, h4, or the class .cwss-element.', 'snapsection' ), 
+                array( 'br' => array() ) 
+                ); 
+            ?>
+        </p>
+
+    <?php }
+
+
+    /**
      * Creates the field for the Icon Color
      *
      * @since 1.0.0
-     * @param [array] $arguments
+     * 
+     * @param array $arguments
      * @return void
      */
     public function field_color_callback( $arguments ) { ?>
@@ -174,7 +315,9 @@ class SettingsPage {
     /**
      * Creates the field for the Icon Size
      *
-     * @param [array] $arguments
+     * @since 1.0.0
+     * 
+     * @param array $arguments
      * @return void
      */
     public function field_icon_size_callback( $arguments ) { ?>
@@ -198,7 +341,7 @@ class SettingsPage {
      *
      * @since 1.0.0
      * 
-     * @param [array] $arguments
+     * @param array $arguments
      * @return void
      */
     public function snapsection_icon_image( $arguments ) {
@@ -222,7 +365,7 @@ class SettingsPage {
                         value='<?php echo esc_html( $iconValue ) ?>'
                         <?php checked( esc_html( snapSection()->options->getOption( 'icon' ) ?? 'option1' ), esc_html( $iconValue ) ) ?>
                     >
-                    <label for="snapsection_dynamic_icon<?php echo esc_html( $i ) ?>">
+                    <label for="snapsection_dynamic_icon<?php echo esc_html( $i ) ?>" class="label-image">
                         <img
                             width=22
                             height=22

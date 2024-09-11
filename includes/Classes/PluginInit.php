@@ -42,9 +42,56 @@ class PluginInit {
 
     // enqueue SnapSection scripts
     public function cwss_enqueue_scripts() {
-        if( is_admin() || is_archive() || is_search() ) {
+        if ( is_admin() || is_search() ) {
             return;
         }
+
+        // Get Options Where
+        $where_options = snapSection()->options->getOption( 'where' );
+
+        // If no options, set 'post' as default
+        if ( empty( $where_options ) ) {
+            $where_options = array( 'post' );
+        }
+
+        // A serie of checks to enable SnapSection in the selected options
+        $should_load = false;
+
+        if ( in_array( 'post', $where_options ) && is_singular( 'post' ) ) {
+            $should_load = true;
+        }
+
+        if ( in_array( 'page', $where_options ) && is_singular( 'page' ) ) {
+            $should_load = true;
+        }
+
+        if ( in_array( 'archive', $where_options ) && is_archive() ) {
+            $should_load = true;
+        }
+
+        if ( in_array( 'front_page', $where_options ) && is_front_page() ) {
+            $should_load = true;
+        }
+
+        // Check CPTs
+        $args = array(
+            'public'   => true,
+            '_builtin' => false
+        );
+        $post_types = get_post_types( $args, 'names' );
+
+        foreach ( $post_types as $post_type ) {
+            if ( in_array( $post_type, $where_options ) && is_singular( $post_type ) ) {
+                $should_load = true;
+                break;
+            }
+        }
+
+        // If WordPress template file doesn't match any of the selected options, return and perform no further actions
+        if ( ! $should_load ) {
+            return;
+        }
+
         // Styles
         wp_enqueue_style( 'cwss-css', CWSS_CSS_URL . 'style.min.css', array(), CWSS_PLUGIN_VERSION );
 
@@ -76,7 +123,8 @@ class PluginInit {
                 'iconSVG'    => snapSection()->options->getOption( 'icon' ) ?? 'option1',
                 'pluginURL'  => plugin_dir_url( __FILE__ ),
                 'iconSize'   => snapSection()->options->getOption( 'size' ) ?? '.7',
-                'iconText'   => snapSection()->options->getOption( 'text' ) ?? esc_html__( 'Copied!' )
+                'iconText'   => snapSection()->options->getOption( 'text' ) ?? esc_html__( 'Copied!' ),
+                'element'   => snapSection()->options->getOption( 'element' ) ?? '<h2>',
             ) 
         );
     }

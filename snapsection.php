@@ -3,7 +3,7 @@
  * Plugin Name:       SnapSection
  * Plugin URI:        https://www.snapsection.com
  * Description:       SnapSection allows users to swift share specific sections from your article or blog post.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Eduardo Capella

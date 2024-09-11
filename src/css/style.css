@@ -1,3 +1,4 @@
+/* Capellaweb SnapSection Variables */
 :root {
     --cwss-icon-margin-left: .32rem;
     --cwss-icon-width: 2rem;
@@ -5,26 +6,20 @@
     --cwss-icon-top: '10px';
 }
 
-h3.cwss-h3 {
+/* SnapSection header */
+.cwss-h3 {
     display: flex;
-    /* min-height: 28px; */
 }
 
 .cwss-h3-wrapper {
     position: relative;
-    /* padding-right: 2.5rem; */
-    /* display: flex;
-    align-items: center; */
 }
 
-.cwss-h3-link-icon {
-    display: block;
-    width: 80%;
-    height: 100%;
-    /* max-width: var( --cwss-icon-width); */
+/* Snapsection Icon Button */
 
+.cwss-h3-wrapper button.cwss-h3-link-icon {
+    display: none;
     padding: 0;
-    /* margin-left: var( --cwss-icon-margin-left ); */
 
     border: 0;
     background-color: transparent;
@@ -40,45 +35,33 @@ h3.cwss-h3 {
     transform: translate(0, -50%);
 }
 
-.cwss-h3-link-icon svg {
-    display: block;
-}
+.cwss-h3-wrapper button.cwss-h3-link-icon:hover {
+    border: 0;
+    background-color: transparent !important;
+    outline: 0;
 
-.cwss-h3-link-icon:hover {
-    /* transform: translate(0, -50%) rotate(5deg); */
-    background-color: transparent;
     opacity: 0.8;
     transition: all .2s ease-in-out;
 }
 
-.cwss-h3-link-icon svg * {
-    fill: var( --cwss-icon-color );
+.cwss-h3-wrapper:hover button.cwss-h3-link-icon {
+    display: block;
 }
 
-/* 
-SVG path fill color
-.cwss-h3-link-icon svg path {
-    fill: pink;
-}
-*/
-
-
-.cwss-h3-link-icon img {
+.cwss-h3-wrapper button.cwss-h3-link-icon img {
     display:block;
     width: 1.4rem;
 }
 
-
-
-h3 .cwss-h3-link-icon {
-    display: none;
-}
-
-h3 .cwss-h3-wrapper:hover .cwss-h3-link-icon {
+.cwss-h3-wrapper button.cwss-h3-link-icon svg {
     display: block;
 }
 
+.cwss-h3-wrapper button.cwss-h3-link-icon svg * {
+    fill: var( --cwss-icon-color );
+}
 
+/* Animations */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -89,7 +72,8 @@ h3 .cwss-h3-wrapper:hover .cwss-h3-link-icon {
     to { opacity: 0; }
 }
 
-.message-balloon {
+/* Message Copied Baloon */
+.cwss-message-balloon {
     position: fixed;
     left: 50%; /* Ajustado dinamicamente pelo JavaScript */
     top: 50%; /* Ajustado dinamicamente pelo JavaScript */
@@ -106,7 +90,7 @@ h3 .cwss-h3-wrapper:hover .cwss-h3-link-icon {
     animation: fadeIn 0.2s ease-out forwards;
 }
 
-.message-balloon::before {
+.cwss-message-balloon::before {
     content: '';
     position: absolute;
     top: -18px; /* Ajusta para alinhar a base da seta com a parte inferior do balão */

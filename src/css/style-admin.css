@@ -4,25 +4,32 @@
 
 .cwss-row {
     display: flex;
-    gap: 1.6rem;
+    flex-wrap: wrap;
+    column-gap: 1.6rem;
+    row-gap: 1rem;
 }
 
 .cwss-col {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
     gap: .3rem;
+    margin-top: 1px;
 }
 
 .cwss-col label {
+    display: flex;
+    line-height: 1rem;
+    margin-bottom: 4px;
+}
+
+.label-image {
     padding: .75rem;
     border: 2px solid var(--border-color);
     background: white;
-    display: flex;
     width: 1.4rem;
     height: 1.4rem;
     text-align: center;
-    line-height: 1rem;
+    
     border-radius: .6rem;
 }
 
@@ -35,4 +42,26 @@
     border-color: #3582c4;
 }
 
+#snapsection_dynamic_element {
+    min-width: 10rem;
+}
 
+.form-table td p.cwss-field-description {
+    margin-top: .5rem;
+    max-width: 38.75rem;
+}
+
+.settings_page_snapsection {
+    /* background: white; */
+}
+
+
+.form-table td {
+    padding: 20px 10px 20px 0;
+    line-height: 1.3;
+}
+
+th[scope="row"] label {
+    margin-bottom: 2px;
+    display: block;
+}
