@@ -3,7 +3,7 @@ Contributors: eduardocapella
 Donate link: https://snapsection.com/donate
 Tags: section, blog, share section, share page URL, share post URL
 Requires at least: 5.8
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 Stable tag: 1.1.0
 Requires PHP: 7.0
 License: GPLv2 or later
@@ -17,9 +17,9 @@ SnapSection allows users to share specific sections from your article or blog po
 It appends the `id` attribute of the SnapSection element (the default one is `h2`, but you can also select `h1`, `h3`, `h4`, or `.cwss-element`) to your page's URL. Consequently, any user who clicks the link will be directed to this specific section of your page or post.
 
 ## How does it work?
-SnapSection scans every `h3` (third-level heading) element across your website's pages and posts, checking for an `id`. If it doesn't find one, it generates an `id` based on the `h3` text.
+SnapSection scans every SnapSection Element across the URL, checking for an `id`. If it doesn't find one, it generates an `id` based on its text.
 
-Once an `id` is assigned, users can share the link to a specific `h3` by hovering over it and clicking the displayed icon. Users who access the shared URL will be directed to the corresponding section of your post or article.
+Once an `id` is assigned, users can copy the link to this specific element by hovering over it and clicking the displayed icon. Users who access the shared URL will be directed to the corresponding section of your post or article.
 
 
 === Frequently Asked Questions ===

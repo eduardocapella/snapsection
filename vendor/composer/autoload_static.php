@@ -22,9 +22,6 @@ class ComposerStaticInit3abc856abc77adcc28872e729f1252c0
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'Cwss\\Classes\\Options' => __DIR__ . '/../..' . '/includes/Classes/Options.php',
-        'Cwss\\Classes\\PluginInit' => __DIR__ . '/../..' . '/includes/Classes/PluginInit.php',
-        'Cwss\\Classes\\SettingsPage' => __DIR__ . '/../..' . '/includes/Classes/SettingsPage.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

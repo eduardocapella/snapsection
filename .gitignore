@@ -5,3 +5,5 @@ __MACOSX/\*
 snapsection.zip
 /vendor/
 /dist/
+.alias
+phpcs.xml

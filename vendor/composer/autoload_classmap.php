@@ -7,7 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
-    'Cwss\\Classes\\Options' => $baseDir . '/includes/Classes/Options.php',
-    'Cwss\\Classes\\PluginInit' => $baseDir . '/includes/Classes/PluginInit.php',
-    'Cwss\\Classes\\SettingsPage' => $baseDir . '/includes/Classes/SettingsPage.php',
 );
